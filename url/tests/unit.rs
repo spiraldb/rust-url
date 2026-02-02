@@ -1383,3 +1383,19 @@ fn serde_error_message() {
         r#"relative URL without a base: "§invalid#+#*Ä" at line 1 column 25"#
     );
 }
+
+// https://github.com/servo/rust-url/issues/1077
+#[cfg(feature = "std")]
+#[test]
+fn test_url_parsing() {
+    let tmpdir = tempfile::tempdir().unwrap();
+    let tmp_path = tmpdir.path().to_str().unwrap();
+    let tmp_path = tmp_path.replace("\\", "%5C");
+    let mut url = url::Url::parse("file://").unwrap();
+    url.path_segments_mut()
+        .unwrap()
+        .pop_if_empty()
+        .extend(std::iter::once(tmp_path));
+    dbg!(&url);
+    url.to_file_path().unwrap();
+}
