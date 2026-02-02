@@ -14,12 +14,13 @@ categories = ["parser-implementations", "web-programming", "encoding", "no-std"]
 license = "MIT OR Apache-2.0"
 include = ["src/**/*", "LICENSE-*", "README.md", "tests/**"]
 edition = "2018"
-rust-version = "1.63" # From libc
+rust-version = "1.63"                                                            # From libc
 
 [dev-dependencies]
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 bencher = "0.1"
+tempfile = { version = "3" }
 
 [target.'cfg(all(target_arch = "wasm32", target_os = "unknown"))'.dev-dependencies]
 wasm-bindgen-test = "0.3"
